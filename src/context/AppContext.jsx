@@ -7,7 +7,7 @@ export const AppProvider = ({ children }) => {
   const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const API_KEY = "17693a62b18e48de96621dec31126e37"; // ← replace this with your API key
+
  const NEWS_URL = `/api/news`;
 
   useEffect(() => {

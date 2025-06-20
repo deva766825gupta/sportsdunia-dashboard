@@ -4,13 +4,14 @@ import { useApp } from "../context/AppContext";
 import FilterBar from "../components/FilterBar";
 import ArticleCard from "../components/ArticleCard";
 import LoadingSpinner from "../components/LoadingSpinner";
-import { exportToPDF, exportToCSV } from "../utils/exportUtils"; // 📤 Add this
+import { exportToPDF, exportToCSV } from "../utils/exportUtils";
 
 const Dashboard = () => {
   const { articles, loading } = useApp();
   const [filtered, setFiltered] = useState([]);
 
-  const articleList = filtered.length > 0 ? filtered : articles;
+  // ✅ Safe check to always get array
+  const articleList = Array.isArray(filtered) && filtered.length > 0 ? filtered : (Array.isArray(articles) ? articles : []);
 
   if (loading) return <LoadingSpinner />;
 
@@ -48,9 +49,13 @@ const Dashboard = () => {
 
       {/* 📰 Article Cards */}
       <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {articleList.map((article) => (
-          <ArticleCard key={article.id} article={article} />
-        ))}
+        {articleList.length > 0 ? (
+          articleList.map((article) => (
+            <ArticleCard key={article.id} article={article} />
+          ))
+        ) : (
+          <div className="text-center text-gray-500 col-span-full">No articles found.</div>
+        )}
       </div>
     </div>
   );

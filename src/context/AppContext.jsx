@@ -7,6 +7,8 @@ export const AppProvider = ({ children }) => {
   const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  const NEWS_URL = `/api/news`;
+
   useEffect(() => {
     fetchArticles();
   }, []);

@@ -15,34 +15,50 @@ const Login = () => {
   };
 
   return (
-    <div className="flex items-center justify-center h-screen bg-gray-100">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-r from-blue-100 to-purple-100">
+      <h1 className="text-4xl font-bold mb-6">Sports Dunia Assignment</h1>
+
       <form
         onSubmit={handleSubmit}
-        className="bg-white p-8 rounded shadow-md w-96 space-y-4"
+        className="bg-white p-10 rounded-lg shadow-lg w-full max-w-md space-y-6"
       >
-        <h2 className="text-2xl font-semibold mb-4 text-center">Login</h2>
-        <input
-          type="email"
-          placeholder="Email"
-          className="w-full border p-2 rounded"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          className="w-full border p-2 rounded"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
+        <h2 className="text-3xl font-bold text-center text-gray-700">Login</h2>
+
+        <div>
+          <label className="block mb-2 text-gray-600">Email</label>
+          <input
+            type="email"
+            placeholder="Enter your email"
+            className="w-full p-3 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400 bg-gray-100"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+        </div>
+
+        <div>
+          <label className="block mb-2 text-gray-600">Password</label>
+          <input
+            type="password"
+            placeholder="Enter your password"
+            className="w-full p-3 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400 bg-gray-100"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+        </div>
+
         <button
           type="submit"
-          className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700"
+          className="w-full bg-blue-500 hover:bg-blue-600 text-white py-3 rounded-lg transition duration-300"
         >
           Login
         </button>
+
+        <p className="text-center text-gray-500 text-sm">
+          Admin: <strong>admin@sportsdunia.com / admin</strong><br />
+          Other users can login with any email/password.
+        </p>
       </form>
     </div>
   );

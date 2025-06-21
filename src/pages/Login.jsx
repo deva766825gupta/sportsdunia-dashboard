@@ -56,7 +56,7 @@ const Login = () => {
         </button>
 
         <p className="text-center text-gray-500 text-sm">
-          Admin: <strong>admin@sportsdunia.com / admin</strong><br />
+         Admin: <strong>admin@gmail.com / 123</strong><br />
           Other users can login with any email/password.
         </p>
       </form>

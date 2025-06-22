@@ -1,5 +1,5 @@
 
-# Sports Dunia Assignment Dashboard
+# Sports Dunia  Assignment Dashboard (Frontend Developer)
 A responsive admin dashboard built with React.js that includes  article management, download tracking, and admin analytics. This project features user and admin-specific functionalities with a clean, modern UI.
 
 ### 🚀 Features

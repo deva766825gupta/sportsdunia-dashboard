@@ -1,84 +1,99 @@
 import React, { useState, useEffect } from "react";
 
 const FilterBar = ({ articles, setFiltered }) => {
-  const [author, setAuthor] = useState("");
-  const [type, setType] = useState("");
-  const [search, setSearch] = useState("");
+  const [selectedTitle, setSelectedTitle] = useState("All");
+  const [selectedAuthor, setSelectedAuthor] = useState("All");
+  const [selectedType, setSelectedType] = useState("All");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
 
+  // Get unique titles and authors
+  const titles = ["All", ...new Set(articles.map((article) => article.title))];
+  const authors = ["All", ...new Set(articles.map((article) => article.author))];
+  const types = ["All", "news", "blog"];
+
   useEffect(() => {
-    let filtered = articles;
+    let result = articles;
 
-    // Filter by author
-    if (author) {
-      filtered = filtered.filter((item) =>
-        item.author.toLowerCase().includes(author.toLowerCase())
-      );
+    if (selectedTitle !== "All") {
+      result = result.filter((article) => article.title === selectedTitle);
     }
 
-
-    if (type) {
-      filtered = filtered.filter((item) => item.type === type);
+    if (selectedAuthor !== "All") {
+      result = result.filter((article) => article.author === selectedAuthor);
     }
 
-  
-    if (startDate && endDate) {
-      filtered = filtered.filter((item) => {
-        const date = new Date(item.publishedAt);
-        return date >= new Date(startDate) && date <= new Date(endDate);
-      });
+    if (selectedType !== "All") {
+      result = result.filter((article) => article.type === selectedType);
     }
 
-   
-    if (search) {
-      filtered = filtered.filter((item) =>
-        item.title.toLowerCase().includes(search.toLowerCase())
-      );
+    if (startDate) {
+      result = result.filter((article) => new Date(article.publishedAt) >= new Date(startDate));
     }
 
-    setFiltered(filtered);
-  }, [author, type, search, startDate, endDate, articles, setFiltered]);
+    if (endDate) {
+      result = result.filter((article) => new Date(article.publishedAt) <= new Date(endDate));
+    }
+
+    setFiltered(result);
+  }, [selectedTitle, selectedAuthor, selectedType, startDate, endDate, articles, setFiltered]);
 
   return (
-    <div className="mb-4 bg-white p-4 rounded shadow space-y-2 md:space-y-0 md:space-x-4 md:flex items-center justify-between">
-      <input
-        type="text"
-        placeholder="Search Title from  Articles "
-        className="border p-2 rounded w-full md:w-auto"
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
-      />
-      <input
-        type="text"
-        placeholder="Author"
-        className="border p-2 rounded w-full md:w-auto"
-        value={author}
-        onChange={(e) => setAuthor(e.target.value)}
-      />
+    <div className="flex flex-wrap gap-4 mb-4">
+      {/* 🔽 Title Dropdown */}
       <select
-        value={type}
-        onChange={(e) => setType(e.target.value)}
-        className="border p-2 rounded w-full md:w-auto"
+        value={selectedTitle}
+        onChange={(e) => setSelectedTitle(e.target.value)}
+        className="border px-3 py-2 rounded"
       >
-        <option value="">All Types</option>
-        <option value="news">News</option>
-        <option value="blog">Blog</option>
+        {titles.map((title, idx) => (
+          <option key={idx} value={title}>
+            {title}
+          </option>
+        ))}
       </select>
-      <div className="flex space-x-2">
-        <input
-          type="date"
-          className="border p-2 rounded"
-          value={startDate}
-          onChange={(e) => setStartDate(e.target.value)}
-        />
-        <input
-          type="date"
-          className="border p-2 rounded"
-          value={endDate}
-          onChange={(e) => setEndDate(e.target.value)}
-        />
-      </div>
+
+      {/* 🔽 Author Dropdown */}
+      <select
+        value={selectedAuthor}
+        onChange={(e) => setSelectedAuthor(e.target.value)}
+        className="border px-3 py-2 rounded"
+      >
+        {authors.map((author, idx) => (
+          <option key={idx} value={author}>
+            {author}
+          </option>
+        ))}
+      </select>
+
+      {/* 🔽 Type Dropdown */}
+      <select
+        value={selectedType}
+        onChange={(e) => setSelectedType(e.target.value)}
+        className="border px-3 py-2 rounded"
+      >
+        {types.map((type, idx) => (
+          <option key={idx} value={type}>
+            {type === "All" ? "All Types" : type.charAt(0).toUpperCase() + type.slice(1)}
+          </option>
+        ))}
+      </select>
+
+      {/* 📅 Start Date */}
+      <input
+        type="date"
+        value={startDate}
+        onChange={(e) => setStartDate(e.target.value)}
+        className="border px-3 py-2 rounded"
+      />
+
+      {/* 📅 End Date */}
+      <input
+        type="date"
+        value={endDate}
+        onChange={(e) => setEndDate(e.target.value)}
+        className="border px-3 py-2 rounded"
+      />
     </div>
   );
 };

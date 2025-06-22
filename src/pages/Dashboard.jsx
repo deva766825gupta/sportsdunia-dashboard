@@ -10,7 +10,6 @@ const Dashboard = () => {
   const { articles, loading } = useApp();
   const [filtered, setFiltered] = useState([]);
 
-  // ✅ Safe check to always get array
   const articleList = Array.isArray(filtered) && filtered.length > 0 ? filtered : (Array.isArray(articles) ? articles : []);
 
   if (loading) return <LoadingSpinner />;
